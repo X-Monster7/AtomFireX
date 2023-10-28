@@ -57,7 +57,7 @@ def respond(message, chat_history):
         ["Tell me more about it",
          "Cool, but I'm not interested",
          "Hmmmm, ok then"]
-        )
+    )
     chat_history.append((message, bot_message))
     return "", chat_history
 
@@ -91,7 +91,7 @@ def respond(message, chat_history, instruction, temperature = 0.7):
         max_new_tokens = 1024,
         stop_sequences = ["\nUser:", "<|endoftext|>"],
         temperature = temperature
-        )
+    )
     # stop_sequences to not generate the user answer
     acc_text = ""
     # Streaming the tokens
@@ -119,7 +119,7 @@ with gr.Blocks() as demo:
         system = gr.Textbox(
             label = "System message", lines = 2,
             value = "A conversation between a user and an LLM-based AI assistant. The assistant gives helpful and honest answers."
-            )
+        )
         temperature = gr.Slider(label = "temperature", minimum = 0.1, maximum = 1, value = 0.7, step = 0.1)
     btn = gr.Button("Submit")
     clear = gr.ClearButton(components = [msg, chatbot], value = "Clear console")
@@ -147,7 +147,7 @@ def respond(message, chat_history, instruction, temperature = 0.7):
         max_new_tokens = 1024,
         stop_sequences = ["\nUser:", "<|endoftext|>"],
         temperature = temperature
-        )
+    )
     # stop_sequences to not generate the user answer
     acc_text = ""
     # Streaming the tokens
@@ -175,7 +175,7 @@ with gr.Blocks() as demo:
         system = gr.Textbox(
             label = "System message", lines = 2,
             value = "A conversation between a user and an LLM-based AI assistant. The assistant gives helpful and honest answers."
-            )
+        )
         temperature = gr.Slider(label = "temperature", minimum = 0.1, maximum = 1, value = 0.7, step = 0.1)
     btn = gr.Button("Submit")
     clear = gr.ClearButton(components = [msg, chatbot], value = "Clear console")

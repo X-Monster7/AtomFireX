@@ -19,7 +19,7 @@ def summarize(input_text):
 
 if __name__ == "__main__":
     # 使用clash代理软件和代码配置系统代理环境，解决网络问题
-    _ = load_dotenv(find_dotenv("summary.env"))
+    _ = load_dotenv(find_dotenv("./env/summary.env"))
 
     model = pipeline("summarization")
     gr.close_all()
