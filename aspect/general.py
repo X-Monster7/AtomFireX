@@ -30,7 +30,7 @@ def _timer(func):
         start = time.time()
         res = func(*args, **kwargs)
         end = time.time()
-        print(f'{func.__name__}, id {id(func)}, 用时 {end - start} s')
+        print(f"{func.__name__}, id {id(func)}, 用时 {end - start} s")
         return res
 
     return wrapper
@@ -46,19 +46,19 @@ class Log:
         "INFO": logging.INFO,
         "WARNING": logging.WARNING,
         "ERROR": logging.ERROR,
-        "CRITICAL": logging.CRITICAL
+        "CRITICAL": logging.CRITICAL,
     }
 
-    def __init__(self, path = "./Log/.log", level = "DEBUG"):
+    def __init__(self, path="./Log/.log", level="DEBUG"):
         base_path = os.path.split(path)[0]
-        os.makedirs(base_path, exist_ok = True)
+        os.makedirs(base_path, exist_ok=True)
         logging.basicConfig(
-            filename = path,
-            level = Log.LEVEL[level],
-            format = '%(asctime)s [%(levelname)s] %(message)s',
-            datefmt = '%Y-%m-%d %H:%M:%S'
+            filename=path,
+            level=Log.LEVEL[level],
+            format="%(asctime)s [%(levelname)s] %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
-        self.logger = logging.getLogger('logger')
+        self.logger = logging.getLogger("logger")
 
     def __call__(self, func):
         @functools.wraps
@@ -66,11 +66,11 @@ class Log:
             try:
                 res = func(*args, **kwargs)
                 # TODO: 添加更加合理、有效的参数信息
-                self.logger.info(f'{func.__name__} 执行成功')
+                self.logger.info(f"{func.__name__} 执行成功")
             except BaseException:
                 res = None
                 # TODO: 添加更加合理、有效的参数信息
-                self.logger.error(f'{func.__name__} 执行成功')
+                self.logger.error(f"{func.__name__} 执行成功")
             return res
 
         return wrapper
@@ -78,5 +78,4 @@ class Log:
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        else:
-            return types.MethodType(self, instance)
+        return types.MethodType(self, instance)
