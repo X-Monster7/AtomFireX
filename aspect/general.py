@@ -16,7 +16,7 @@ import pprint
 import types
 
 
-def _timer(func):
+def clock(func):
     """
     装饰器用法，将函数的运算时间打印到控制台
     Args:
@@ -49,14 +49,14 @@ class Log:
         "CRITICAL": logging.CRITICAL,
     }
 
-    def __init__(self, path="./Log/.log", level="DEBUG"):
+    def __init__(self, path = "./Log/.log", level = "DEBUG"):
         base_path = os.path.split(path)[0]
-        os.makedirs(base_path, exist_ok=True)
+        os.makedirs(base_path, exist_ok = True)
         logging.basicConfig(
-            filename=path,
-            level=Log.LEVEL[level],
-            format="%(asctime)s [%(levelname)s] %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
+            filename = path,
+            level = Log.LEVEL[level],
+            format = "%(asctime)s [%(levelname)s] %(message)s",
+            datefmt = "%Y-%m-%d %H:%M:%S",
         )
         self.logger = logging.getLogger("logger")
 
@@ -68,6 +68,7 @@ class Log:
                 # TODO: 添加更加合理、有效的参数信息
                 self.logger.info(f"{func.__name__} 执行成功")
             except BaseException:
+               
                 res = None
                 # TODO: 添加更加合理、有效的参数信息
                 self.logger.error(f"{func.__name__} 执行成功")
