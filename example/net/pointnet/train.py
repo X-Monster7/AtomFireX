@@ -13,13 +13,13 @@
 """
 import sys
 import os
-from example.net import PointNet
+from example.net import pointnet
 import torch
 
 sys.path.append(f'../../example')
 
 # 创建模型
-model = PointNet(1024)
+model = pointnet(1024)
 model.train()
 # 优化器定义
 optim = torch.optim.Adam(params = model.parameters(), weight_decay = 0.001)

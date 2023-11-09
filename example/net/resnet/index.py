@@ -1,4 +1,4 @@
-""" The Implement of ResNet.
+""" The Implement of resnet.
 
 Author: Alan
 Date: 2023年10月26日

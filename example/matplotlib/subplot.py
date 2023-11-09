@@ -65,7 +65,7 @@ def _subplots():
 
     plt.show()
 
-
+_subplot()
 
 
 

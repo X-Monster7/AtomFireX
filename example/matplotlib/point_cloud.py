@@ -29,5 +29,6 @@ ax.set_xlabel('X轴')
 ax.set_ylabel('Y轴')
 ax.set_zlabel('Z轴')
 
+plt.savefig('./img/point_cloud.png')
 # 显示图形
 plt.show()

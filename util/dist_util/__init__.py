@@ -6,12 +6,8 @@
 @date: 2023/9/18 8:48
 @version: 1.0.0
 """
-
-import os
 import sys
-import torch.cuda
-import torch.distributed as dist
-import argparse
 
 __version__ = '1.0.0'
+# 获取当前模块的引用
 DistTool = sys.modules[__name__]
