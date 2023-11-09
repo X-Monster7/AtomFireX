@@ -1,4 +1,4 @@
-"""PointNet Implement By Pytorch
+"""pointnet Implement By Pytorch
 
 Author: Alan Tsang / Zeng Zhicun
 Institution: CSU, China, changsha
