@@ -6,14 +6,16 @@
 @Date: 2023/11/8 20:33
 ================
 """
+import numpy as np
 import torch
 import torch.nn.functional as F
-from aspect.general import clock, Log
+from aspect.general import timer, Log
 
 Tensor = torch.Tensor
 
 
-@clock
+@timer
+@Log
 def dot_production_attention(q: Tensor, k: Tensor, v: Tensor) -> Tensor:
     """
     点积注意力

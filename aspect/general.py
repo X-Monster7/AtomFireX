@@ -16,7 +16,7 @@ import pprint
 import types
 
 
-def clock(func):
+def timer(func):
     """
     装饰器用法，将函数的运算时间打印到控制台
     Args:

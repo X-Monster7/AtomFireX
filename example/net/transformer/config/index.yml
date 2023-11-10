@@ -1,0 +1,19 @@
+model:
+  input_shape: [28, 28, 1]
+  output_shape: [10]
+  hidden_layers: [64, 32]
+  activation: relu
+
+training:
+  batch_size: 32
+  epochs: 10
+  learning_rate: 0.01
+  optimizer: adam
+
+logging:
+  log_dir: logs
+  log_freq: 100
+
+checkpoint:
+  save_dir: checkpoints
+  save_freq: 1

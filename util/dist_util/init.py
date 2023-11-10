@@ -29,7 +29,7 @@ def init_distributed_args_(world_size: int):
     # 开启的进程数(注意不是线程),不用设置该参数，会根据nproc_per_node自动设置
     parser.add_argument('--world-size', default=world_size, type=int,
                         help='number of distributed processes')
-    parser.add_argument('--dist-url', default='env://', help='url used to set up distributed training')
+    parser.add_argument('--dist-url', default='config://', help='url used to set up distributed training')
     return parser.parse_args()
 
 

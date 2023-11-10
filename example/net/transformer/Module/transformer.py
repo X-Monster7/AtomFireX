@@ -6,8 +6,7 @@
 @Date: 2023/11/8 20:13
 ================
 """
-import torch.nn as nn
-from .index import *
+from example.net.transformer.Module.index import *
 
 
 class encoder(nn.Module):

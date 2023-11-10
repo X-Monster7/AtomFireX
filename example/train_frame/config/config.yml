@@ -1,0 +1,11 @@
+train:
+  epoch: 30
+  batch_size: 128
+  lr: 0.03
+  device: 'cuda'
+
+metric: [ 'loss' ]
+
+#tensorboard:
+#  is_open: True
+#  dir: ./tensorboard/log

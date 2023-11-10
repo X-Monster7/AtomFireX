@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/config python
 # -*- coding: utf-8 -*-
 
 """
@@ -18,7 +18,7 @@ requests.adapters.DEFAULT_TIMEOUT = 60
 
 from dotenv import load_dotenv, find_dotenv
 
-_ = load_dotenv(find_dotenv())  # read local .env file
+_ = load_dotenv(find_dotenv())  # read local .config file
 hf_api_key = os.environ['HF_API_KEY']
 
 # Helper function
