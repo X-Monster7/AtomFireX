@@ -7,8 +7,9 @@
 ================
 """
 from tqdm import tqdm
-
-from example.train_frame.base.trainer_base import TrainerBase
+import torch
+from torch import distributed as dist
+from base.trainer_base import TrainerBase
 
 
 class Trainer(TrainerBase):
@@ -28,7 +29,7 @@ class Trainer(TrainerBase):
         # 仍然是采用了 加载的方式，而真正定义这些的类，会在下一节中介绍
         model.train()
         self.data_loader = data_loader
-        self.model = model.cuda()
+        self.model = model
         self.loss = loss
         self.optimizer = optimizer
         # 用yaml包加载配置，yaml加载之后是一个字典

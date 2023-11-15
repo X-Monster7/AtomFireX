@@ -65,17 +65,17 @@ class STN3d(nn.Module):
         x = F.relu(self.bn1024(self.conv1024(x)))
         # (batch, 1024, num_point)
         # max return (value, slice)
-        x = torch.max(x, 2, keepdim=False)[0]
+        x = torch.max(x, 2, keepdim = False)[0]
         # view can squeeze tensor like torch.squeeze
         # x = x.view(-1, 1024)
         x = self.bn512(self.bn512(self.fc512(x)))
         x = self.bn256(self.bn256(self.fc256(x)))
         x = self.fc9(x)
 
-        identity = torch.from_numpy(
-            np.eye(
-                3, dtype=np.float32).flatten()).repeat(
-            batch_size, 1)
+        identity = (torch.from_numpy(
+            np.eye(3, dtype = np.float32)
+            .flatten()
+        ).repeat(batch_size, 1))
         if x.is_cuda:
             identity = identity.cuda()
         x = (x + identity).reshape(-1, 3, 3)
@@ -92,7 +92,7 @@ class STNkd(nn.Module):
     MLP can not only be implemented by Conv, but also Linear or FC
     """
 
-    def __init__(self, k=64):
+    def __init__(self, k = 64):
         """
 
         Args:
@@ -129,7 +129,7 @@ class STNkd(nn.Module):
         x = F.relu(self.bn1024(self.conv1024(x)))
         # (batch, 1024, num_point)
         # max return (value, slice)
-        x = torch.max(x, 2, keepdim=False)[0]
+        x = torch.max(x, 2, keepdim = False)[0]
         # view can squeeze tensor like torch.squeeze
         # x = x.view(-1, 1024)
         x = self.bn512(self.bn512(self.fc512(x)))
@@ -139,9 +139,12 @@ class STNkd(nn.Module):
         identity = torch.from_numpy(
             np.eye(
                 self.k,
-                dtype=np.float32).flatten()).repeat(
+                dtype = np.float32
+            ).flatten()
+        ).repeat(
             batch_size,
-            1)
+            1
+        )
         if x.is_cuda:
             identity = identity.cuda()
         x = (x + identity).reshape(-1, self.k, self.k)
@@ -156,7 +159,7 @@ class PointEncoder(nn.Module):
     def __init__(self):
         super(PointEncoder, self).__init__()
         self.stn = STN3d()
-        self.stn_f = STNkd(k=64)
+        self.stn_f = STNkd(k = 64)
 
         self.conv64 = torch.nn.Conv1d(3, 64, 1)
         self.cov64_ = torch.nn.Conv1d(64, 64, 1)
@@ -191,7 +194,7 @@ class PointEncoder(nn.Module):
         x = self.bn1024(self.conv1024(x))
 
         # MAX POOL
-        x = torch.max(x, 2, keepdim=True)[0]
+        x = torch.max(x, 2, keepdim = True)[0]
         x = x.view(-1, 1024)
         return x
 

@@ -11,7 +11,7 @@ import os
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
-from example.train_frame.base.hook_base import HookBase
+from base.hook_base import HookBase
 
 
 class Saver(HookBase):

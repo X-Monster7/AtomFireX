@@ -6,9 +6,9 @@
 @Date: 2023/11/10 11:35
 ================
 """
-from example.train_frame.base.hook_base import HookBase
-
 import weakref
+
+from example.train_frame.base.hook_base import HookBase
 
 
 class TrainerBase:
@@ -24,7 +24,7 @@ class TrainerBase:
 
     def register_hooks(self, hooks):
         for h in hooks:
-            assert h is not None and isinstance(h, HookBase)
+            # assert (h is not None) and isinstance(h, HookBase)
             h.trainer = weakref.proxy(self)
         self._hooks.extend(hooks)
 

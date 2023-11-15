@@ -12,6 +12,7 @@ import time
 import os
 import logging
 import functools
+from functools import wraps
 import pprint
 import types
 
@@ -49,7 +50,8 @@ class Log:
         "CRITICAL": logging.CRITICAL,
     }
 
-    def __init__(self, path = "./Log/.log", level = "DEBUG"):
+    def __init__(self, func, path = "./Log/.log", level = "DEBUG"):
+        wraps(func)(self)
         base_path = os.path.split(path)[0]
         os.makedirs(base_path, exist_ok = True)
         logging.basicConfig(
@@ -64,11 +66,10 @@ class Log:
         @functools.wraps
         def wrapper(*args, **kwargs):
             try:
-                res = func(*args, **kwargs)
+                res = self.__wrapped__(args, kwargs)
                 # TODO: 添加更加合理、有效的参数信息
                 self.logger.info(f"{func.__name__} 执行成功")
             except BaseException:
-               
                 res = None
                 # TODO: 添加更加合理、有效的参数信息
                 self.logger.error(f"{func.__name__} 执行成功")

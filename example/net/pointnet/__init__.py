@@ -11,3 +11,5 @@
 @date: 2023/10/23 9:01
 @version: 1.0.0
 """
+
+from .point_net import PointEncoder

@@ -7,7 +7,7 @@ Institution: CSU, China, changsha
 Date: 2023/10/28
 ==================================
 """
-
+from example.net.transformer import Transformer
 import types
 from functools import wraps
 from pprint import pprint

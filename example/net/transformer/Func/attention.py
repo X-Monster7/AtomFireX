@@ -15,7 +15,7 @@ Tensor = torch.Tensor
 
 
 @timer
-@Log
+# @Log
 def dot_production_attention(q: Tensor, k: Tensor, v: Tensor) -> Tensor:
     """
     点积注意力
@@ -47,7 +47,7 @@ def transpose_qkv(x: torch.Tensor, h: int) -> Tensor:
         (batch_size * num_heads, 查询或者“键－值”对的个数, num_hidden / num_heads)
     """
     x = x.reshape(x.shape[0], x.shape[1], h, -1)
-    x = x.transpose(0, 2, 1, 3)
+    x = x.transpose(2, 1)
     # 最终输出的形状:(batch_size*num_heads,查询或者“键－值”对的个数,
     # num_hidden / num_heads)
     return x.reshape(-1, x.shape[2], x.shape[3])
@@ -64,5 +64,5 @@ def untranspose_qkv(x: Tensor, h: int) -> Tensor:
         (batch_size,  num_query / num_key_value, h * hidden)
     """
     x = x.reshape(-1, h, x.shape[1], x.shape[2])
-    x = x.transpose(0, 2, 1, 3)
+    x = x.transpose(2, 1)
     return x.reshape(x.shape[0], x.shape[1], -1)
