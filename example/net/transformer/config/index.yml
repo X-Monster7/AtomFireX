@@ -1,14 +1,18 @@
 model:
-  input_shape: [28, 28, 1]
-  output_shape: [10]
-  hidden_layers: [64, 32]
-  activation: relu
+  h: 4
+  encoder:
+    text_hidden: 24
+    text_size: 100
+    layer: 2
+    dropout: 0.5
+    ffn_hidden: 512
+
+  decoder:
 
 training:
   batch_size: 32
   epochs: 10
   learning_rate: 0.01
-  optimizer: adam
 
 logging:
   log_dir: logs

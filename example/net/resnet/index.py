@@ -10,7 +10,7 @@ import torch.nn.functional as F
 
 
 class Block(nn.Module):
-    def __init__(self, in_channel, out_channel, is_use_1plus1_conv):
+    def __init__(self, in_channel, out_channel, is_use_1x1_conv):
         super(Block, self).__init__()
 
         self.conv1 = nn.Conv2d(
@@ -21,7 +21,7 @@ class Block(nn.Module):
             in_channels = out_channel, out_channels = out_channel,
             kernel_size = (3, 3), stride = 2, padding = 1
         )
-        if in_channel != out_channel:
+        if is_use_1x1_conv:
             self.conv3 = nn.Conv2d(in_channel, out_channel, (1, 1), stride = 2)
         self.bn1 = nn.BatchNorm2d(out_channel)
         self.bn2 = nn.BatchNorm2d(out_channel)
@@ -37,7 +37,7 @@ class Block(nn.Module):
         return F.relu(x + origin)
 
 
-# class ResNet18(nn.Module):
+# class ResNet18(nn.module):
 #     def __init__(self, input_channel, num_hidden, *args, **kwargs):
 #         super().__init__(*args, **kwargs)
 #         self.block1 = nn.Sequential(
@@ -52,7 +52,7 @@ class Block(nn.Module):
 #         nn.Flatten(), nn.Linear(512, 10)
 
 if __name__ == "__main__":
-    blk = Block(3, 3)
+    blk = Block(3, 3, False)
     X = torch.rand(4, 3, 6, 6)
     Y = blk(X)
     print(Y.shape)

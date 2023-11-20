@@ -32,15 +32,15 @@ train_set = FashionMNIST(
 with open('config/config.yml') as _:
     config = yaml.safe_load(_)
 
-# setup = {'backend': 'gloo'}
+setup = {'backend': 'gloo'}
 # TODO: 实现设置环境的传参，例如backend和url等
-args = init.setup_environment()
+args = init.setup_environment(setup)
 
 dataloader = function.DDPDataLoader(dataset = train_set, batch_size = config['train']['batch_size'])
 net = function.DDPNet(LeNet().cuda(), args)
 loss = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(net.parameters(), lr = config['train']['lr'])
-
+print(net.module)
 trainer = Trainer(
     data_loader = dataloader,
     model = net,

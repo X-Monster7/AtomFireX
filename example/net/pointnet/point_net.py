@@ -199,7 +199,7 @@ class PointEncoder(nn.Module):
         return x
 
 
-# class PointNetCls(nn.Module):
+# class PointNetCls(nn.module):
 #     def __init__(self, k = 2):
 #         super(PointNetCls, self).__init__()
 #         self.feat = PointEncoder()

@@ -7,8 +7,6 @@
 ================
 """
 from tqdm import tqdm
-import torch
-from torch import distributed as dist
 from base.trainer_base import TrainerBase
 
 
