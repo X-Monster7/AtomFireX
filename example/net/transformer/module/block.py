@@ -29,3 +29,14 @@ class EncoderBlock(nn.Module):
         x = self.ffn(x)
         x = self.add_norm2(x_, x)
         return x
+
+
+class DecoderBlock(nn.Module):
+    """
+    单一的transformer decoder block.
+    """
+
+    def __init__(self, normed_shape, dropout, qkv_size, h, ffn_hidden):
+        super(DecoderBlock, self).__init__()
+        self.add_norm1 = AddNorm(normed_shape, dropout)
+        self.multi_attention1 = MultiHeadAttention(qkv_size, h)

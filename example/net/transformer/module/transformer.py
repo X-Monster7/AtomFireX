@@ -18,6 +18,7 @@ from example.net.transformer.module.core import *
 
 class TransformerEncoder(nn.Module):
     """编码器"""
+
     def __init__(self, args: dict):
         super().__init__()
         train_args = args['model']['encoder']
@@ -55,7 +56,18 @@ class TransformerEncoder(nn.Module):
 
 
 class TransformerDecoder(nn.Module):
-    pass
+    def __init__(self, args: dict):
+        super().__init__()
+        train_args = args['model']['encoder']
+        h = args['model']['h']
+        # key_size = train_args['key_size']
+        # query_size = train_args['query_size']
+        # value_size = train_args['value_size']
+        text_hidden = train_args['text_hidden']
+        text_size = train_args['text_size']
+        layer = train_args['layer']
+        dropout = train_args['dropout']
+        ffn_hidden = train_args['ffn_hidden']
 
 
 class Transformer(nn.Module):
@@ -71,6 +83,7 @@ class Transformer(nn.Module):
 __all__ = ['Transformer']
 
 if __name__ == '__main__':
+    1
     # with open('../config/index.yml') as _:
     #     args = yaml.safe_load(_)
     # encoder = TransformerEncoder(args)

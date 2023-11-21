@@ -16,10 +16,11 @@ Tensor = torch.Tensor
 
 @timer
 # @Log
-def dot_production_attention(q: Tensor, k: Tensor, v: Tensor) -> Tensor:
+def dot_production_attention(q: Tensor, k: Tensor, v: Tensor, valid_len = None) -> Tensor:
     """
     点积注意力
     Args:
+        valid_len: valid length for k、v
         q: query, (batch_size, query_num, d)
         k: key, (batch_size, key_value_pair_num, d)
         v: value, (batch_size, ) or (batch_size, 查询个数)
@@ -28,11 +29,15 @@ def dot_production_attention(q: Tensor, k: Tensor, v: Tensor) -> Tensor:
        (batch_size, query_num, key_value_pair_num)
     """
     d_k = q.shape[-1]
-    # dim指定为1，在每个查询中计算其与所有键的相关性得分，
-    # 然后使用 softmax 将这些分数归一化为注意力权重
-    _ = F.softmax(torch.bmm(q, k.transpose(1, 2)) / np.sqrt(d_k), dim = -1)
-    # question: why _ can bmm with v ?
-    return torch.bmm(_, v)
+    _ = torch.bmm(q, k.transpose(1, 2)) / np.sqrt(d_k)
+    if valid_len:
+
+    else:
+        # dim指定为1，在每个查询中计算其与所有键的相关性得分，
+        # 然后使用 softmax 将这些分数归一化为注意力权重
+        _ = F.softmax(_, dim = -1)
+        # question: why _ can bmm with v ?
+        return torch.bmm(_, v)
 
 
 def transpose_qkv(x: torch.Tensor, h: int) -> Tensor:
