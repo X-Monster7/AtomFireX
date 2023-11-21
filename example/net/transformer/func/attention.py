@@ -31,14 +31,14 @@ def dot_production_attention(q: Tensor, k: Tensor, v: Tensor, valid_len = None) 
     """
     d_k = q.shape[-1]
     _ = torch.bmm(q, k.transpose(1, 2)) / np.sqrt(d_k)
-    if valid_len:
-        return masked_softmax(_, valid_len)
+    if valid_len is not None:
+        _ = masked_softmax(_, valid_len)
     else:
         # dim指定为1，在每个查询中计算其与所有键的相关性得分，
         # 然后使用 softmax 将这些分数归一化为注意力权重
         _ = F.softmax(_, dim = -1)
         # question: why _ can bmm with v ?
-        return torch.bmm(_, v)
+    return torch.bmm(_, v)
 
 
 def masked_softmax(X: Tensor, valid_lens: Tensor):

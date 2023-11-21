@@ -18,6 +18,13 @@ from example.net.transformer.module.core import *
 
 class TransformerEncoder(nn.Module):
     """编码器"""
+    """
+    valid_len是1D或者2D，最终变成长度为（b * h, len(text) ）的一维向量
+    valid是1D，考虑多头的话，valid_len 需要 先在多头注意力层 0维放大h倍，
+    然后在mask_softmax层放大第1维。
+    
+    valid是2D，自身就考虑了第1维，因此只在多头注意力层 0维放大h倍。
+    """
 
     def __init__(self, args: dict):
         super().__init__()
@@ -83,9 +90,9 @@ class Transformer(nn.Module):
 __all__ = ['Transformer']
 
 if __name__ == '__main__':
-    1
-    # with open('../config/index.yml') as _:
-    #     args = yaml.safe_load(_)
-    # encoder = TransformerEncoder(args)
-    # encoder.eval()
-    # print(encoder(torch.ones((2, 100), dtype = torch.long)).shape)
+    with open('../config/index.yml') as _:
+        args = yaml.safe_load(_)
+    encoder = TransformerEncoder(args)
+    encoder.eval()
+    valid_len = torch.tensor([3, 2])
+    print(encoder(torch.ones((2, 100), dtype = torch.long), valid_len).shape)
