@@ -6,6 +6,7 @@
 @Date: 2023/11/8 20:33
 ================
 """
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -31,13 +32,49 @@ def dot_production_attention(q: Tensor, k: Tensor, v: Tensor, valid_len = None) 
     d_k = q.shape[-1]
     _ = torch.bmm(q, k.transpose(1, 2)) / np.sqrt(d_k)
     if valid_len:
-
+        return masked_softmax(_, valid_len)
     else:
         # dim指定为1，在每个查询中计算其与所有键的相关性得分，
         # 然后使用 softmax 将这些分数归一化为注意力权重
         _ = F.softmax(_, dim = -1)
         # question: why _ can bmm with v ?
         return torch.bmm(_, v)
+
+
+def masked_softmax(X: Tensor, valid_lens: Tensor):
+    """
+    在最后一个轴上掩蔽元素来执行softmax操作.
+    X的前面两个维度直接合起来就可以了
+    Args:
+        X: (batch, len(text), hidden(query_size))
+        valid_lens: (mask_length)每一个batch的text mask长度 or
+        (len(text) , mask_length) 不同的batch的text长度
+
+    Returns:
+
+    """
+    """通过"""
+    # X:3D张量，valid_lens:1D或2D张量
+    shape = X.shape
+    if valid_lens.dim() == 1:
+        valid_lens = torch.repeat_interleave(valid_lens, shape[1])
+    else:
+        valid_lens = valid_lens.reshape(-1)
+    # 最后一轴上被掩蔽的元素使用一个非常大的负值替换，从而其softmax输出为0
+    X = sequence_mask(
+        X.reshape(-1, shape[-1]), valid_lens,
+        value = -1e6
+    )
+    return F.softmax(X.reshape(shape), dim = -1)
+
+
+def sequence_mask(X, valid_len, value: float = 0):
+    maxlen = X.size(1)
+    # arange (1, max_len) 与 valid_len (, 1) 都自动广播了]
+    mask = torch.arange(maxlen, dtype = torch.float32, device = X.device)[None, :] < valid_len[:, None]
+    # X 和 mask的shape相同
+    X[~mask] = value
+    return X
 
 
 def transpose_qkv(x: torch.Tensor, h: int) -> Tensor:
@@ -71,3 +108,7 @@ def untranspose_qkv(x: Tensor, h: int) -> Tensor:
     x = x.reshape(-1, h, x.shape[1], x.shape[2])
     x = x.transpose(2, 1)
     return x.reshape(x.shape[0], x.shape[1], -1)
+
+
+if __name__ == '__main__':
+    print(masked_softmax(torch.rand(2, 3, 4), torch.tensor([2, 3])))

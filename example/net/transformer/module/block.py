@@ -21,9 +21,9 @@ class EncoderBlock(nn.Module):
         self.ffn = PositionWiseFFN(qkv_size, ffn_hidden)
         self.add_norm2 = AddNorm(normed_shape, dropout)
 
-    def forward(self, x, y, z):
+    def forward(self, x, y, z, valid_len):
         x_ = x
-        x = self.multi_attention(x, y, z)
+        x = self.multi_attention(x, y, z, valid_len)
         x = self.add_norm1(x_, x)
         x_ = x
         x = self.ffn(x)

@@ -47,11 +47,11 @@ class TransformerEncoder(nn.Module):
         self.embedding = nn.Embedding(text_size, text_hidden)
         self.pos_encode = PEN(text_hidden)
 
-    def forward(self, x):
+    def forward(self, x, valid_len):
         x = self.embedding(x) * math.sqrt(self.text_hidden)
         x = self.pos_encode(x)
         for encoder in self.encoder_list:
-            x = encoder(x, x, x)
+            x = encoder(x, x, x, valid_len)
         return x
 
 
