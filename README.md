@@ -11,6 +11,6 @@ Knowledge should be recorded！
 ### 手动安装
 1. conda create env -n your_name
 2. conda activate your_name
-3. conda install mamba / pip install mamba。mamba在包管理方面，兼容conda（conda ** 可直接替换为mamba **），但比conda更快（3-5倍）。
+3. conda install mamba / pip install mamba。mamba在包管理方面，兼容conda（conda **可直接替换为mamba**），但比conda更快（3-5倍）。
 4. mamba install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia。
 5. 哪里错了安哪里。
