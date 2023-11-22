@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: conda or anaconda3 @22.9.0
     - name: install conda
-      uses: https://www.anaconda.com/download
+      uses: https://www.anaconda.com/download @22.9.0
       with:
         python-version: '3.10'
     - name: Install Env
