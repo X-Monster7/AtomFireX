@@ -10,5 +10,6 @@
 from .transformer import Transformer
 from .pointnet import point_net as PointNet
 from .lenet import LeNet
+from .resnet import ResNet18
 
-__all__ = ['Transformer', 'PointNet', 'LeNet']
+__all__ = ['Transformer', 'PointNet', 'LeNet', 'ResNet18']
